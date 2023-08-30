@@ -1,21 +1,28 @@
-import logo from "./logo.svg";
+import * as React from "react";
 import "./App.css";
 
-import Canvas from "./components/canvassearchbox";
-import GridStyle from "./components/gridstylesearchresults";
-import HomePage from "./components/homepage";
-import {InfiniteScroll} from "./components/infintescroll";
+import { HitProvider } from "./context/HitProvider";
+
+import Canvas from "./components/Canvas";
+import HomePage from "./components/HomePage";
+import GridStyle from "./components/GridStyle";
+import ModalComponent from "./components/Modal";
 
 function App() {
   return (
-    <div className="App" class="d-flex justify-content-start">
-      <div class="w-75">
-        <HomePage />
-        <GridStyle />
-        {/* <InfiniteScroll /> */}
+    <HitProvider>
+      <div className="App" class="d-flex justify-content-start">
+        <div class="w-75">
+          <HomePage />
+          <GridStyle />
+        </div>
+        <Canvas class="w-24" />
       </div>
-      <Canvas class="w-24" />
-    </div>
+      ``
+      <div>
+        <ModalComponent />
+      </div>
+    </HitProvider>
   );
 }
 

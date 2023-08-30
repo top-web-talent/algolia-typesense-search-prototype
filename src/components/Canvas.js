@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   InstantSearch,
   SearchBox,
   RefinementList,
   Hits,
+  InfiniteHits,
   Highlight,
-} from "react-instantsearch-dom";
+} from "react-instantsearch";
 import Drawer from "@material-ui/core/Drawer";
-
-import { typenessclient } from "./typenessclient";
-import { mockHits } from "../constants/mockhits";
-
-
-
+import { HitContext } from "../context/HitProvider";
+import { typesenseClient } from "./typesenseClient";
 
 const Canvas = () => {
   const [open, setOpen] = useState(false);
+  const {hits, setHits} = useContext(HitContext)
   return (
     <>
       <button className="btn btn-primary" onClick={() => setOpen(true)}>
@@ -29,11 +27,10 @@ const Canvas = () => {
           >
             Close
           </button>
-          <InstantSearch indexName="mockIndex" searchClient={{ search() {} }}>
+          <InstantSearch indexName="auditions" searchClient={typesenseClient}>
             <SearchBox />
-            {/* <RefinementList attribute="title" />
-            <RefinementList attribute="description" /> */}
-            <Hits hitComponent={({ hit }) => console.log("123123")} Hits={mockHits} />
+            <RefinementList attribute="type" />
+            <Hits hitComponent={({ hit }) => setHits(hit)} />
           </InstantSearch>
         </div>
       </Drawer>
@@ -41,15 +38,5 @@ const Canvas = () => {
     </>
   );
 };
-
-function Hit({ hit }) {
-  console.log({ hit });
-  return (
-    <div>
-      <h1>title</h1>
-      <p>description</p>
-    </div>
-  );
-}
 
 export default Canvas;

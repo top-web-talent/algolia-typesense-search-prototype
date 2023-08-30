@@ -1,0 +1,28 @@
+.ais-InfiniteHits-list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  width: 100%;
+  align-items: stretch;
+}
+
+.grid-col {
+  width: 25%;
+  flex: none;
+  align-self: stretch;
+}
+
+.ais-InfiniteHits-item .card-title span {
+  font-size: 16px;
+}
+
+.ais-InfiniteHits-item .card-text span {
+  font-size: 12px;
+}
+
+.card:hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}

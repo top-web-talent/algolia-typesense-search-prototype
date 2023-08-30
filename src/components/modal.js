@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   InstantSearch,
   SearchBox,
@@ -11,8 +11,8 @@ import {
 import Drawer from "@material-ui/core/Drawer";
 import Modal from "react-bootstrap/Modal";
 
-import { typenessclient } from "./typenessclient";
-
+import { typesenseClient } from "./typesenseClient";
+import { HitContext } from "../context/HitProvider";
 const HitsModal = ({ hits }) => {
   return (
     <>
@@ -33,25 +33,27 @@ const HitsModal = ({ hits }) => {
 const CustomHits = connectHits(HitsModal);
 
 const ModalComponent = () => {
-  const [open, setOpen] = useState(false);
   const [selectedHit, setSelectedHit] = useState(null);
-
+  const {isModal, setIsModal} = useContext(HitContext)
   const handleHitClick = (hit) => {
     setSelectedHit(hit);
-    setOpen(true);
+    setIsModal(true);
   };
 
   return (
     <>
-      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+      <Drawer anchor="left" open={isModal} onClose={() => setIsModal(false)}>
         <div className="p-3">
           <button
             className="btn btn-secondary mb-3"
-            onClick={() => setOpen(false)}
+            onClick={() => setIsModal(false)}
           >
             Close
           </button>
-          <InstantSearch indexName="mockIndex" searchClient={{}}>
+          <InstantSearch
+            indexName="auditions"
+            searchClient={typesenseClient}
+          >
             <SearchBox />
             <RefinementList attribute="performer" />
             <RefinementList attribute="type" />
@@ -77,10 +79,9 @@ const ModalComponent = () => {
                   </div>
                 </div>
               )}
-              hits={mockHits(4)}
             />
             {selectedHit && (
-              <Modal show={open} onHide={() => setOpen(false)}>
+              <Modal show={isModal} onHide={() => setIsModal(false)}>
                 <Modal.Header closeButton>
                   <Modal.Title>{selectedHit.title}</Modal.Title>
                 </Modal.Header>

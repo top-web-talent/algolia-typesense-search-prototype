@@ -1,0 +1,9 @@
+.btn {
+  display: block;
+  width: 140px;
+  height: 50px;
+}
+
+.grid-col {
+  max-width: 100%;
+}
